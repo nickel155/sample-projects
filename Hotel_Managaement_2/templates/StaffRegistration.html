@@ -1,0 +1,39 @@
+{% include "adminHead.html" %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-6">
+      <div class="card p-3 mt-3">
+        <h4 class="text-center">HotelStaff Registration</h4>
+        <form action="addHotelStaff1">
+          <div>
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" placeholder="Enter Name" required>
+          </div>
+          <div>
+            <label class="form-label">Email</label>
+            <input class="form-control" type="email" name="email" placeholder="Enter Email" required>
+          </div>
+          <div>
+            <label class="form-label">Phone</label>
+            <input class="form-control" type="number" name="phone" placeholder="Enter Phone Number" required>
+          </div>
+          <div>
+            <label class="form-label">Password</label>
+            <input class="form-control" type="password" name="password" placeholder="Enter Password" required>
+          </div>
+          <input type="submit" class="btn btn-info w-100 mt-3" value="Register">
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6"></div>
+  </div>
+</div>
+<style>
+	body{
+		 background-image: url("https://www.luxxu.net/blog/wp-content/uploads/2020/01/The-Worlds-Most-Exceptionally-Designed-Luxury-Hotel-Lobbies-4.jpg");
+	  	 background-repeat: no-repeat;
+ 		 background-attachment: fixed;
+ 		 background-size: cover;
+	}
+</style>

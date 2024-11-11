@@ -1,0 +1,29 @@
+{% if session['role'] == NULL %}
+    {% include 'index.html'%}
+{% elif session['role'] == 'Admin' %}
+    {% include 'adminHead.html'%}
+{% elif session['role'] == 'Customer'%}
+    {% include "customerHead.html" %}
+{% elif session['role'] == 'HotelStaff'%}
+    {% include "cHotelStaffHead.html" %}
+{% endif %}
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+         <div class="alert alert-info d-flex align-items-center mt-3" role="alert">
+      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+      <div>
+          {{msg}}
+      </div>
+    </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<style>
+	body{
+		 background-image: url("https://images.pexels.com/photos/5511103/pexels-photo-5511103.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+	  	 background-repeat: no-repeat;
+ 		 background-attachment: fixed;
+ 		 background-size: cover;
+	}
+</style>

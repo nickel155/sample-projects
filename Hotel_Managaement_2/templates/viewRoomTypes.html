@@ -1,0 +1,25 @@
+{% include "adminHead.html" %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="container mt-3">
+        <h4>Room Types</h4>
+        <ul class="list-group">
+           {% for roomType in roomTypes %}
+          <li class="list-group-item">{{roomType['roomType']}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+<style>
+	body{
+		 background-image: url("https://cdn.shopify.com/s/files/1/0399/6742/4678/files/5-bedroom-design-ideas-to-transform-it-into-a-luxury-hotel-suite.jpg?v=1669103704");
+	  	 background-repeat: no-repeat;
+ 		 background-attachment: fixed;
+ 		 background-size: cover;
+	}
+</style>

@@ -1,0 +1,43 @@
+{% include "customerHead.html" %}
+<div class="">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="card p-3 mt-3">
+        <h5 class="text-center">Payment</h5>
+        <form action="update_payment_status">
+          <input type="hidden" name="booking_id" value="{{booking_id}}">
+          <div>
+            <label class="mt-3">Card Type</label>
+            <select class="form-select" name="card_type">
+              <option value="">Choose Card</option>
+              <option value="credit card">Credit Card</option>
+               <option value="debit card">Debit Card</option>
+            </select>
+          </div>
+          <div>
+            <label class="mt-3">Name On Card</label>
+            <input class="form-control" type="text" name="name_on_card" placeholder="Enter Name On Card" required>
+          </div>
+           <div>
+            <label class="mt-3">Card Number</label>
+            <input class="form-control" type="number" name="card_number" placeholder="Enter Card Number" required>
+          </div>
+          <div>
+            <label class="mt-3">Payable Amount</label>
+            <input class="form-control" type="text" name="remaining_amount" value="${{remaining_amount1}}">
+          </div>
+          <input type="submit" class="btn btn-primary w-100 mt-3" value="Pay">
+        </form>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+  <style>
+	body{
+		 background-image: url("https://images.pexels.com/photos/10149616/pexels-photo-10149616.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+	  	 background-repeat: no-repeat;
+ 		 background-attachment: fixed;
+ 		 background-size: cover;
+	}
+</style>

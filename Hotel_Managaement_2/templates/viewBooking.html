@@ -1,0 +1,98 @@
+{% if session['role'] == 'Customer'%}
+    {% include "customerHead.html" %}
+{% elif session['role'] == 'HotelStaff'%}
+    {% include "HotelStaffHead.html" %}
+{% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mt-3">
+                {% if session['role'] == 'HotelStaff' %}
+                    <form action="viewBooking">
+                        <label class="text-white">Choose Date</label>
+                        <input type="date" class="form-control" name="date" onchange="this.form.submit()">
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+    <div class="row">
+            {% for booking in bookings%}
+            {% set room,customer,room_type = get_Booking_Room_By_Id(booking['_id'])%}
+         <div class="col-md-12 mt-3">
+            <div class="card bg-light border-warning p-3 mt-3">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="text-muted" style="font-size:10px">Customer Name</div>
+                        <h5 style="font-size:15px">{{customer['name']}}</h5>
+                    </div>
+                     <div class="col-md-2">
+                        <div class="text-muted" style="font-size:10px">From Date & Time</div>
+                        <h5 style="font-size:15px">{{booking['expected_check_in']}}</h5>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="text-muted" style="font-size:10px">To Date & Time</div>
+                        <h5 style="font-size:15px">{{booking['expected_check_out']}}</h5>
+                    </div>
+                     <div class="col-md-2">
+                        <div class="text-muted" style="font-size:10px">Room Type</div>
+                        <h5 style="font-size:15px">{{room_type['roomType']}}</h5>
+                    </div>
+                     <div class="col-md-2">
+                        <div class="text-muted" style="font-size:10px">Room Name</div>
+                        <h5 style="font-size:15px">{{room['room_Name']}}</h5>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="text-muted" style="font-size:10px">Booking Type</div>
+                        <h5 style="font-size:15px">{{booking['booking_Type']}}</h5>
+                    </div>
+                    <div class="col-md-2 mt-2">
+                        <div class="text-muted" style="font-size:10px">No Of Rooms</div>
+                        <h5 style="font-size:15px">{{booking['no_of_rooms']}}</h5>
+                    </div>
+                    {% if 'room_numbers' in booking: %}
+                        <div class="col-md-4 mt-2">
+                            <div class="text-muted" style="font-size:10px">Rooms Assigned</div>
+                            <h5 style="font-size:15px">
+                                {% for room_number in booking['room_numbers'] %}
+                                    <lable>{{room_number}}</lable> &nbsp; &nbsp; &nbsp;
+                                {% endfor %}
+                            </h5>
+                        </div>
+                    {% endif %}
+                    <div class="col-md-2 mt-2">
+                        <div class="text-muted" style="font-size:10px">Booking Status</div>
+                        <h5 style="font-size:15px">{{booking['status']}}</h5>
+                    </div>
+                    <div class="col-md-4">
+                        {% if session['role'] == 'Customer' and booking['status'] == 'Room Booked'%}
+                        <a href="update_status?booking_id={{booking['_id']}}" class="btn btn-danger w-100 mt-3">Cancel Booking</a>
+                        <a href="viewRooms?booking_id={{booking['_id']}}" class="btn btn-primary w-100 mt-3">Upgrade Booking</a>
+                        {% elif session['role'] == 'Customer' and booking['status'] == 'Room Assigned'%}
+                        <a href="update_checkout_status?booking_id={{booking['_id']}}" class="btn btn-warning w-100 mt-3">Request Checkout</a>
+                        {% elif session['role'] == 'Customer' and booking['status'] == 'Payment Requested'%}
+                        <a href="pay_remaining?booking_id={{booking['_id']}}&{{booking['extra_charges']}}" class="btn btn-success w-100 mt-3">Pay Total Amount</a>
+                         {% elif session['role'] == 'HotelStaff' and booking['status'] == 'Checkout Requested'%}
+                        <a href="add_Bills?booking_id={{booking['_id']}}" class="btn btn-success w-100 mt-3">Add Bills</a>
+                        {% elif session['role'] == 'HotelStaff' and booking['status'] == 'Room Booked' %}
+                        <a href="assignRoom?booking_id={{booking['_id']}}" class="btn btn-success w-100 mt-3">Assign Room</a>
+                         {% elif session['role'] == 'HotelStaff' and booking['status'] == 'Total Amount Paid'%}
+                        <a href="checkoutProcess?booking_id={{booking['_id']}}" class="btn btn-warning w-100 mt-3">Proceed Checkout</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+         </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<style>
+	body{
+		 background-image: url("https://images.pexels.com/photos/2928067/pexels-photo-2928067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+	  	 background-repeat: no-repeat;
+ 		 background-attachment: fixed;
+ 		 background-size: cover;
+	}
+</style>

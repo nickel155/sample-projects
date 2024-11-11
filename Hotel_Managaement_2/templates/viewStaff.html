@@ -1,0 +1,31 @@
+{% include "adminHead.html" %}
+<div class="container">
+  <div class="row">
+      {% for staff in staff %}
+    <div class="col-md-3">
+      <div class="card p-3 mt-3">
+        <div class="row">
+           <h5 class="text-center">{{staff['name']}}</h5>
+          <hr>
+          <div class="col-md-6 ">
+            <div class="text-muted" style="font-size:12px">Phone</div>
+            <h6>{{staff['phone']}}</h6>
+          </div>
+           <div class="col-md-6 ">
+             <div class="text-muted" style="font-size:12px">Email</div>
+            <h6>{{staff['email']}}</h6>
+           </div>
+        </div>
+      </div>
+    </div>
+      {% endfor %}
+  </div>
+</div>
+<style>
+	body{
+		 background-image: url("https://www.luxxu.net/blog/wp-content/uploads/2020/01/The-Worlds-Most-Exceptionally-Designed-Luxury-Hotel-Lobbies-4.jpg");
+	  	 background-repeat: no-repeat;
+ 		 background-attachment: fixed;
+ 		 background-size: cover;
+	}
+</style>

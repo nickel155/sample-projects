@@ -1,0 +1,20 @@
+{% include "customerHead.html" %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="card bg-dark text-white p-3 mt-3">
+        <h5 class="text-center">Select Dates</h5>
+        <form action="upgrading_process">
+          <input type="hidden" name="booking_id" value="{{booking_id}}">
+           <div>
+            <label class="mt-2">Select To Date</label>
+            <input class="form-control" type="date" name="to_date" placeholder="Enter To date">
+          </div>
+          <input type="submit" class="btn btn-warning mt-3 w-100" value="Done">
+        </form>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>

@@ -1,0 +1,178 @@
+{% include "head.html" %}
+<div class="container-fluid">
+    <div><br></div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <h2 class="text-center text-warn">Student Home Page</h2>
+        </div>
+        <div class="col-1">
+            <div class="text-end"><a href="/student/logout">log out</a></div>
+        </div>
+    </div>
+    <div><br></div>
+    <div class="row">
+        <div class="col-6 text-start">
+            <div class="" id="requestForm">
+                <div class="card card-body text-start">
+                    <h3 class="text-center">Student Request Form</h3>
+                    <form action="/student/request" method="POST">
+                        <input class="d-none" name="studentId" value="{{ student_id }}">
+                        <input class="d-none" name="studentName" value="{{ student_name }}">
+                        <br>
+                        <label>Room Type</label>
+                        <select class="form-control" id="room-type" name="room-type">
+                            <option value="">Select the type of bed room</option>
+                            <option value="2B">Double Bed Room</option>
+                            <option value="3B">Triple Bed Room</option>
+                        </select>
+                        <div>
+                            <label class=" mt-3">Semester</label>
+                            <select class="form-control" id="semester" name="semester">
+                                <option value="">Select the semester</option>
+                                <option value="Fall">Fall</option>
+                                <option value="Spring">Spring</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class=" mt-3">Year</label>
+                            <select class="form-control" id="year" name="year">
+                                <option value="">Select the Year</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class=" mt-3">Roommates</label>
+                            <select class="form-select" multiple aria-label="multiple select example" name="roommates"
+                                    id="roommates">
+                                <option value="">Select your roommates (min-0, max-2)</option>
+                                {% for student in students %}
+                                    {% if student.student_id != student_id and student.gender == student_gender %}
+                                        <option value="{{ student.student_id }}">{{ student.name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div>
+                            <div><br></div>
+                            <button type="submit" class="btn btn-success">Request</button>
+                        </div>
+                        {% if isTopUpNeeded %}
+                            <div class="text-danger">
+                                Please top-up your wallet. Your wallet balance is low.
+                            </div>
+                        {% endif %}
+                        {% if is_customer_has_request %}
+                            <div class="text-danger">
+                                Already has a request for this semester. Please follow up with that request.
+                            </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 text-center">
+            <div class="card">
+                <div class="card-body text-start">
+                    <h4 class="text-center">Requests</h4>
+                    {% for student_request in student_requests %}
+                        <hr>
+                        <div>
+                            <span class="text-info">Student Id :</span> {{ student_request.student_id }}<br>
+                            <span class="text-info">Room Type :</span> {{ student_request.room_type }}<br>
+                            <span class="text-info">Room Number :</span> {{ student_request.room_id }}<br>
+                            {% set semester = student_request.semester.split(' ') %}
+                            <span class="text-info">Semester :</span> {{ semester[0] }}<br>
+                            <span class="text-info">Year :</span> {{ semester [1] }}<br>
+                            <span class="text-info">Roommates :</span> {{ student_request.roommates }}<br>
+                            <span class="text-info">Status :</span> {{ student_request.status }}<br>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div><br></div>
+        </div>
+
+        <div class="col-3 text-end">
+            <div class="card">
+                <div class="card-body">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <h1>
+                            Top-up</h1></button>
+                    <div><br></div>
+                    <div class="">
+                        Your wallet balance is:
+                        <h1>{{ wallet_balance }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="/student/updateWallet" method="POST">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Top-Up your wallet</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input class="d-none" name="studentId" value="{{ student_id }}">
+                            <div class="form-group">
+                                <label>Credit/Debit Card</label>
+                                <input type="text" class="form-control" id="card-number"
+                                       placeholder="Enter your credit/debit card number" name="card-number"
+                                       minlength="16" maxlength="16" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Car Holder Name</label>
+                                <input type="text" class="form-control" id="card-holder-name"
+                                       placeholder="Enter card holder name" name="card-holder-name" required>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <label>Expiry Month</label>
+                                        <input type="number" class="form-control  input-group" id="card-expiry-month"
+                                               name="card-expiry-month" min="1" max="12" required>
+                                    </div>
+                                    <div class="col">
+                                        <label>Expiry Year</label>
+                                        <input type="number" class="form-control  input-group" id="card-expiry-year"
+                                               name="card-expiry-year" min="2024" max="2100" required>
+                                    </div>
+                                    <div class="col">
+                                        <label>Security Code</label>
+                                        <input type="number" class="form-control  input-group" id="card-security-code"
+                                               name="card-security-code" min="000" max="999" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Amount</label>
+                                <input type="number" class="form-control" id="wallet-amount"
+                                       placeholder="Enter amount to be added to wallet" name="wallet-amount" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success btn-lg">Add Money</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        background-image: url("../static/student_home.jpeg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>

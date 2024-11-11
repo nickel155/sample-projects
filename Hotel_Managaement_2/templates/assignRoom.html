@@ -1,0 +1,58 @@
+{% include "HotelStaffHead.html" %}
+<script>
+    let rooms_selected = 0
+    function CheckSelection(room_number){
+        let isSelected = document.getElementById(room_number).checked
+        let number_of_rooms = document.getElementById("number_of_rooms").value
+        if(isSelected){
+            if(rooms_selected>=number_of_rooms){
+                alert("You can not select more than "+number_of_rooms)
+                document.getElementById(room_number).checked = false
+                return;
+            }
+            rooms_selected = rooms_selected + 1
+        }else{
+            rooms_selected = rooms_selected - 1
+        }
+
+    }
+</script>
+<div class="container">
+  <div class="row mt-2">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="card p-3 mt-3">
+        <form action="assignRoom1">
+          <input type="hidden" name="booking_id" value="{{booking_id}}">
+            <input type="hidden" name="room_id" value="{{room['_id']}}">
+            <input type="hidden" name="number_of_rooms" id="number_of_rooms" value="{{booking['no_of_rooms']}}">
+          <div>
+            <label class="form-label">Check In time & date</label>
+            <input class="form-control" type="datetime-local" name="checkIn" required>
+          </div>
+            <label class="mt-2">Room Numbers</label>
+           <div class="row">
+            {% for room_number in available_room_numbers %}
+            <div class="col-md-2">
+              <div class="mt-2">
+                <input type="checkbox" name="{{room_number}}" id="{{room_number}}" onclick="CheckSelection('{{room_number}}')" value="{{room_number}}" id="{{room_number}}">
+                <label for="{{room_number}}">{{room_number}}</label>
+              </div>
+            </div>
+            {% endfor %}
+            </div>
+            <input type="submit" class="btn btn-warning mt-3 w-100"  value="Assign">
+          </form>
+        </div>
+      </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+<style>
+	body{
+		 background-image: url("https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+	  	 background-repeat: no-repeat;
+ 		 background-attachment: fixed;
+ 		 background-size: cover;
+	}
+</style>

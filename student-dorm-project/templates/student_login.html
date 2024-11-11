@@ -1,0 +1,130 @@
+{% include "head.html" %}
+<body>
+<div class="container-fluid">
+    <h1 class="text-center text-warn">Student Dorm</h1>
+</div>
+
+<br>
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-bs-toggle="tab" href="#login-form">Login</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-bs-toggle="tab" href="#register-form">Register</a>
+                                    </li>
+                                </ul>
+
+                                <!-- Login Form -->
+                                <div class="tab-content">
+                                    <div id="login-form" class="container tab-pane active">
+                                        <div><br></div>
+                                        <form action="/student/validate" method="POST">
+                                            <div class="form-group">
+                                                <label class="form-label" for="studentId">Student Id / Admin Id</label>
+                                                <input type="text" class="form-control" id="loginStudentId"
+                                                       name="loginStudentId"
+                                                       placeholder="Enter your student id / admin id">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label" for="loginPassword">Password</label>
+                                                <input type="password" class="form-control" id="loginPassword"
+                                                       name="loginPassword"
+                                                       placeholder="Enter your password">
+                                            </div>
+                                            <div><br></div>
+                                            <button type="submit" class="btn btn-primary">Login</button>
+                                        </form>
+                                    </div>
+                                    <!-- Register Form -->
+                                    <div id="register-form" class="container tab-pane">
+                                        <div><br></div>
+                                        <form action="/student/add" method="POST">
+                                            <div class="form-group">
+                                                <label for="studentId">Student Id</label>
+                                                <input type="number" class="form-control" id="studentId"
+                                                       placeholder="Enter your 5 digits student id" name="studentId"
+                                                       min="10000" max="99999" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="registerFirstName">First Name</label>
+                                                <input type="text" class="form-control" id="registerFirstName"
+                                                       placeholder="Enter your first name" name="registerFirstName" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="registerLastName">Last Name</label>
+                                                <input type="text" class="form-control" id="registerLastName"
+                                                       placeholder="Enter your last name" name="registerLastName">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="registerCourse">Course</label>
+                                                <input type="text" class="form-control" id="registerCourse"
+                                                       placeholder="Enter your Course" name="registerCourse" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="registerPhone">Phone Number</label>
+                                                <input type="tel" class="form-control" id="registerPhone"
+                                                       placeholder="XXX-XXX-XXXX" name="registerPhone"
+                                                       pattern="^\d{10}$" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="registerGender">Gender</label>
+                                                <select class="form-control" id="registerGender"
+                                                        name="registerGender" required>
+                                                    <option value="">Select your gender</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="registerEmail">Email</label>
+                                                <input type="email" class="form-control" id="registerEmail"
+                                                       placeholder="Enter your email" name="registerEmail">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="registerPassword">Password</label>
+                                                <input type="password" class="form-control" id="registerPassword"
+                                                       placeholder="Choose a password" name="registerPassword">
+                                            </div>
+                                            <div><br></div>
+                                            <button type="submit" class="btn btn-success">Register</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                {% if isRegisteredMessage %}
+                                    <div class="text-success">Registration had done successfully. Please log in to
+                                        proceed
+                                    </div>
+                                {% endif %}
+                                {% if is_login_error %}
+                                    <div class="text-danger">Login failed. Please login with valid credentials</div>
+                                {% endif %}
+                                {% if doSignup %}
+                                    <div class="text-danger">Id already exists. Please signup to login.</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+</body>
+<style>
+    body {
+        background-image: url("../static/student_home.jpeg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>

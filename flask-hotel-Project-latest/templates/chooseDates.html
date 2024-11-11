@@ -1,0 +1,36 @@
+{% include "customerHead.html" %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="card bg-dark text-white p-3 mt-3">
+        <h5 class="text-center">Select Dates</h5>
+        <form action="summary">
+          <input type="hidden" name="room_id" value="{{room_id}}">
+          <div>
+            <label class="mt-2 ">Check In Time and Date</label>
+            <input class="form-control" type="datetime-local" name="expected_check_in" placeholder="Enter Checkin date & time" required>
+          </div>
+           <div>
+            <label class="mt-2">Check Out Time and Date</label>
+            <input class="form-control" type="datetime-local" name="expected_check_out" placeholder="Enter Checkout date & time" required>
+          </div>
+          <div>
+            <label class="mt-2">How many rooms?</label>
+            <input class="form-control" type="number" name="no_of_rooms" placeholder="Enter No Of Rooms" required>
+          </div>
+          <input type="submit" class="btn btn-warning mt-3 w-100" value="Book">
+        </form>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+<style>
+	body{
+		 background-image: url("https://images.pexels.com/photos/5386754/pexels-photo-5386754.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+	  	 background-repeat: no-repeat;
+ 		 background-attachment: fixed;
+ 		 background-size: cover;
+	}
+</style>

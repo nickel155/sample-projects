@@ -1,0 +1,250 @@
+{% include "head.html" %}
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid flex">
+        <div class="row">
+            <div class="col-11">
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <span class="navbar-brand mb-0 h1">Admin</span>
+                    <button class="nav-link active" data-bs-toggle="tab"
+                            data-bs-target="#nav-rooms"
+                            type="button" role="tab" id="nav-rooms-tab" aria-controls="nav-rooms" aria-selected="true">
+                        Rooms
+                    </button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#nav-requests"
+                            type="button" role="tab" id="nav-requests-tab" aria-controls="nav-requests"
+                            aria-selected="false">Requests
+                    </button>
+                </div>
+            </div>
+            <div class="col-1 text-end">
+                <div class="text-end"><a href="/student/logout">
+                    Logout
+                </a></div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container-fluid">
+    <div>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-rooms" role="tabpanel" aria-labelledby="nav-rooms-tab">
+                <div class="card text-start">
+                    <div class="card-header">
+                        <h3 class="text-center">Room Details</h3>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="card text-start">
+                                    <div class="card-header">
+                                        <h4>Double Bed Room Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            {% for semester in semesters %}
+                                                <h4 class="text-warn text-center">{{ semester }} Vacancies</h4>
+                                                <div class="row">
+                                                    <div class="col border border-2">
+                                                        <h6 class="text-center text-primary">Building M1</h6>
+                                                        <div class="row">
+                                                            {% for room in room_details %}
+                                                                {% if room.room_type == '2B' and room.building_number == 'M1' %}
+
+                                                                    <div class="col border rounded-3">
+                                                                        <div class="{{ 'container-fluid badge text-bg-light' if room.is_vacant[semester] else 'container-fluid badge text-bg-secondary' }}">{{ room.room_number }}</div>
+                                                                        <div class="text-center">
+                                                                            {% for i in range(room.occupants[semester]|length) %}
+                                                                                <div class="col badge text-bg-secondary">
+                                                                                    B
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                            {% for i in range(room.max_count - room.occupants[semester]|length) %}
+                                                                                <div class="col badge text-bg-light">
+                                                                                    B
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col border border-2">
+                                                        <h6 class="text-center text-primary">Building F1</h6>
+                                                        <div class="row">
+                                                            {% for room in room_details %}
+                                                                {% if room.room_type == '2B' and room.building_number == 'F1' %}
+                                                                    <div class="col border rounded-3">
+                                                                        <div class="{{ 'container-fluid badge text-bg-light' if room.is_vacant[semester] else 'container-fluid badge text-bg-secondary' }}">{{ room.room_number }}</div>
+                                                                        <div class="text-center">
+                                                                            {% for i in range(room.occupants[semester]|length) %}
+                                                                                <div class="col badge text-bg-secondary">
+                                                                                    B
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                            {% for i in range(room.max_count - room.occupants[semester]|length) %}
+                                                                                <div class="col badge text-bg-light">
+                                                                                    B
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card text-start">
+                                    <div class="card-header">
+                                        <h4>Triple Bed Room Details</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            {% for semester in semesters %}
+                                                <h4 class="text-warn text-center">{{ semester }} Vacancies</h4>
+                                                <div class="row">
+                                                    <div class="col border border-2">
+                                                        <h6 class="text-center text-primary">Building M1</h6>
+                                                        <div class="row">
+                                                            {% for room in room_details %}
+                                                                {% if room.room_type == '3B' and room.building_number == 'M1' %}
+
+                                                                    <div class="col border rounded-3">
+                                                                        <div class="{{ 'container-fluid badge text-bg-light' if room.is_vacant[semester] else 'container-fluid badge text-bg-secondary' }}">{{ room.room_number }}</div>
+                                                                        <div class="text-center">
+                                                                            {% for i in range(room.occupants[semester]|length) %}
+                                                                                <div class="col badge text-bg-secondary">
+                                                                                    B
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                            {% for i in range(room.max_count - room.occupants[semester]|length) %}
+                                                                                <div class="col badge text-bg-light">
+                                                                                    B
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col border border-2">
+                                                        <h6 class="text-center text-primary">Building F1</h6>
+                                                        <div class="row">
+                                                            {% for room in room_details %}
+                                                                {% if room.room_type == '3B' and room.building_number == 'F1' %}
+                                                                    <div class="col border rounded-3">
+                                                                        <div class="{{ 'container-fluid badge text-bg-light' if room.is_vacant[semester] else 'container-fluid badge text-bg-secondary' }}">{{ room.room_number }}</div>
+                                                                        <div class="text-center">
+                                                                            {% for i in range(room.occupants[semester]|length) %}
+                                                                                <div class="col badge text-bg-secondary">
+                                                                                    B
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                            {% for i in range(room.max_count - room.occupants[semester]|length) %}
+                                                                                <div class="col badge text-bg-light">
+                                                                                    B
+                                                                                </div>
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-requests" role="tabpanel" aria-labelledby="nav-requests-tab">
+            <div class="text-center">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Requests</h3>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Student Id</th>
+                                <th scope="col">Room Type</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Semester</th>
+                                <th scope="col">Roommates</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Approve/Reject</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for request_for_admin in requests_for_admin %}
+                                <tr>
+                                    <th scope="row">{{ request_for_admin.request_id }}</th>
+                                    <td>{{ request_for_admin.student_id }}</td>
+                                    <td>{{ request_for_admin.room_type }}</td>
+                                    <td>{{ request_for_admin.gender }}</td>
+                                    <td>{{ request_for_admin.semester }}</td>
+                                    <td>{{ request_for_admin.roommates }}</td>
+                                    <td>{{ request_for_admin.status }}</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <form action="/student/assignRoom" method="POST">
+                                                    <input class="d-none" name="requestId"
+                                                           value="{{ request_for_admin.request_id }}">
+                                                    <input class="d-none" name="studentId"
+                                                           value="{{ request_for_admin.student_id }}">
+                                                    <select class="form-select" aria-label="Default select example"
+                                                            name="room-number" required>
+                                                        <option value="">Select room number</option>
+                                                        {% for room_number in possible_room_data[request_for_admin.request_id] %}
+                                                            <option value="{{ room_number }}">
+                                                                {{ room_number }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <button type="submit" class="btn btn-success ">Assign room
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div class="col-3">
+                                                <form action="/student/rejectRequest" method="POST">
+                                                    <input class="d-none" name="requestId"
+                                                           value="{{ request_for_admin.request_id }}">
+                                                    <button type="submit" class="btn btn-danger align-content-end">
+                                                        Reject
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        background-image: url("../static/student_home.jpeg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>

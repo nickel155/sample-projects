@@ -1,0 +1,139 @@
+{% include "adminHead.html" %}
+<div class="">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card p-3 mt-3">
+                <h4 class="text-center">Room Registration Form</h4>
+                <form action="addRoomType" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                <label class="mt-3">Room Type</label>
+                                <input type="text" class="form-control" placeholder="Enter room type" name="room_type"
+                                       required>
+                            </div>
+                            <div>
+                                <label class=" mt-3">Room Size</label>
+                                <input type="text" class="form-control" placeholder="Enter room size in sq.ft"
+                                       name="room_size"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <label class=" mt-3">No Of Available Rooms</label>
+                                <input type="number" class="form-control" name="rooms_available"
+                                       placeholder="Enter Rooms Availability" required>
+                            </div>
+                            <div>
+                                <label class=" mt-3">Price Per Day</label>
+                                <input type="text" class="form-control" placeholder="Enter room name"
+                                       name="price_per_day" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class=" mt-3">Room Numbers</label>
+                            <input type="text" class="form-control" name="room_numbers"
+                                   placeholder="Enter room numbers separate with comma">
+                        </div>
+                        <div>
+                            <label class=" mt-3">Room Picture</label>
+                            <input class="form-control" type="file" name="room_pic" required>
+                        </div>
+                        <input type="submit" class="btn btn-warning mt-3" value="Add Room Type Info">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-3 mt-3">
+                <h3 class="text-center">Room Details</h3>
+                {% for room_type in room_type_data %}
+                    <hr>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="text-muted" style="font-size:12px">Room Type</div>
+                                <h5 class="font-weight-bold">{{ room_type['room_type'] }}</h5>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="text-muted" style="font-size:12px">Size</div>
+                                <h6>{{ room_type['room_size'] }}</h6>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="text-muted" style="font-size:12px">Price per Day</div>
+                                <h6>{{ room_type['price_per_day'] }}</h6>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-muted" style="font-size:12px">Rooms Available</div>
+                                {% for room in room_type['room_numbers'] %}
+                                    <div class="col badge text-bg-secondary">{{ room }}</div>
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <form action="deleteRoom">
+                                    <input class="d-none" name="room-type" value="{{ room_type['room_type'] }}">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <select class="form-control" id="room-number" name="room-number" required>
+                                                <option selected disabled>Select the type of bed room</option>
+                                                {% for room in room_type['room_numbers'] %}
+                                                    <option value="{{ room }}">{{ room }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="submit" class="form-control btn btn-danger"><img
+                                                    src="../static/images/trash.svg"></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card p-3 mt-3">
+                <div class="text-center">
+                    <h5>Add Rooms</h5>
+                </div>
+                <hr>
+                <form action="/addRooms">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="text-muted" style="font-size:16px">Room Type</div>
+                            <select class="form-control" id="room-type-id" name="room-type-id" required>
+                                <option value="">Select the type of bed room</option>
+                                {% for room_type in room_type_data %}
+                                    <option>{{ room_type['room_type'] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="text-muted" style="font-size:16px">Room Numbers</div>
+                            <input type="text" class="form-control"
+                                   placeholder="Enter one or more room numbers separated by comma" name="room-numbers"
+                                   required>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="text-muted invisible" style="font-size:16px">Add Button</div>
+                            <button type="submit" class="form-control btn btn-danger">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        background-image: url("https://images.pexels.com/photos/5774037/pexels-photo-5774037.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>
