@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Creative Colorlib SignUp Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="application/x-javascript">addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- Custom Theme files -->
+    <link href="../static/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <!-- //Custom Theme files -->
+    <!-- web font -->
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+    <!-- //web font -->
+</head>
+<body>
+<!-- main -->
+<div class="main-w3layouts wrapper">
+    <h1>Customer Login Form</h1>
+    <div class="main-agileinfo">
+        <div class="agileits-top">
+            <form action="/customer/login" method="post" id="loginForm">
+                <input class="text" type="text" name="username" placeholder="Username" required=""><br>
+                <input class="text" type="password" name="password" placeholder="Password" required="">
+                <input type="submit" id="login-button" value="LOGIN">
+                {% if error %}
+                    <p style="color: red; margin-bottom:2%">{{ error }}</p>
+                {% endif %}
+            </form>
+            <form action="/customer/add" method="post" id="signupForm" style="display: none;">
+                <input class="text" type="text" name="first_name" placeholder="First Name" required="" pattern=".{2,}" title="Minimum 2 characters"><br>
+                    <input class="text" type="text" name="last_name" placeholder="Last Name" required="" pattern=".{2,}" title="Minimum 2 characters"><br>
+                    <input class="text" type="text" name="username" placeholder="Username" required="" pattern=".{5,}" title="Minimum 5 characters">
+                    <input class="text email" type="email" name="email" placeholder="Email" required="">
+                    <input class="text" type="password" name="password" placeholder="Password" required="" pattern=".{5,}" title="Minimum 5 characters">
+                    <input class="text w3lpass" type="password" name="password1" placeholder="Confirm Password" required="" pattern=".{5,}">
+                    <input class="text" type="text" name="phone" placeholder="Phone" required="" pattern="\d{10}" title="Please enter a 10-digit phone number"><br>
+
+                <br/>
+                <input class="text" type="text" name="address" placeholder="Address" required="">
+                <input type="submit" value="SIGNUP">
+            </form>
+            <p id="toggleSeller" class="toggle-link">Are you a seller? <a href="/seller"> click here!</a></p><br><br>
+            <p id="toggleLogin" class="toggle-link">Don't have an Account? <a href="#"> Sign Up!</a></p>
+            <p id="toggleSignup" class="toggle-link" style="display: none;">Already have an Account? <a href="#"> Login
+                Now!</a></p>
+
+        </div>
+    </div>
+
+
+    <ul class="colorlib-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+<!-- //main -->
+<script>
+    document.getElementById("toggleSignup").addEventListener("click", function () {
+        document.getElementById("signupForm").style.display = "none";
+        document.getElementById("loginForm").style.display = "block";
+        document.getElementById("toggleLogin").style.display = "inline-block";
+        document.getElementById("toggleSignup").style.display = "none";
+    });
+
+    document.getElementById("toggleLogin").addEventListener("click", function () {
+        document.getElementById("loginForm").style.display = "none";
+        document.getElementById("signupForm").style.display = "block";
+        document.getElementById("toggleSignup").style.display = "inline-block";
+        document.getElementById("toggleLogin").style.display = "none";
+    });
+
+
+    document.getElementById("login-button").addEventListener("click", function () {
+        let cartString = JSON.stringify([]);
+        console.log("Logged in", cartString);
+        localStorage.setItem('cart', cartString);
+    });
+
+    {% if reload_flag %}
+        <!-- Include the following script to refresh the page after rendering -->
+
+        // Reload the current page after a short delay for smooth rendering
+        setTimeout(function () {
+            location.replace(location.pathname);  // Remove the reload flag from the URL
+        }, 1000);  // Adjust the delay as needed
+    {% endif %}
+</script>
+</body>
+</html>

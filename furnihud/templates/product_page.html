@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Product Page</title>
+    <link href="../static/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../static/product_page.css" rel="stylesheet" type="text/css" media="all" />
+
+    <!-- //Custom Theme files -->
+    <!-- web font -->
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+    <!-- Shopping Cart (Top Right) -->
+    <div class="shopping-cart">
+         <div class="header-content">
+            <div class="logo">
+                <div class = "logo">Furnihub</div>
+            </div>
+            <div class="header-right">
+                <div class="greeting" id="user-dropdown">
+                    <span id="username">Hello, {{customer.first_name}}</span>
+                    <div class="dropdown-content" id="user-dropdown-content">
+                        <a href="#" id="profile">My Profile</a>
+                        <a href="#" id="my-orders">My Orders</a>
+                        <a href="#" id="logout">Logout</a>
+
+                    </div>
+                </div>
+                <div class="cart" class="go-to-cart-button" id="go-to-cart-button">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>My Profile</h2>
+                <span class="close" onclick="closeProfileModal()">&times;</span>
+            </div>
+           <div class="profile-info">
+            <img src="../static/profilePicture/profile_default.jpg" alt="Profile Image" class="profile-image">
+            <div class="profile-details">
+                <h2>{{ customer.first_name }}{{ customer.last_name }}</h2>
+
+                <p>Username: {{ customer.username }}</p>
+                <p>ID: {{ customer.id }}</p>
+                <p>Email: {{customer.email}}</p>
+                <p>Mobile: {{customer.mobile_number}}</p>
+                <p>Address: {{customer.address}}</p>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div id="ordersModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>My Orders</h2>
+            <span class="close" onclick="closeOrdersModal()">&times;</span>
+        </div>
+        <div class="modal-body" id = "order-model"></div>
+    </div>
+</div>
+
+    <div class = "break"></div>
+    <nav>
+        <ul>
+            <li><a href="#" id = "category-home">Home</a></li>
+            <li><a href="#" id = "coffee-table-link">Coffee Tables</a></li>
+            <li><a  href="#" id = "dining_chair-link">Dining Chairs</a></li>
+            <li><a href="#" id = "dining_set_link">Dining Sets</a></li>
+            <li><a href="#" id = "office-chair-link">Office Chairs</a></li>
+            <li><a href="#" id = "recliners-link">Recliners</a></li>
+            <li><a href="#" id = "shoe-cabinet-link">Shoe Cabinets</a></li>
+            <li><a href="#" id = "sofa-link">Sofas</a></li>
+        </ul>
+    </nav>
+
+    <!-- Product Listing -->
+    <div class="product-list" id = "product-type"></div>
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Product Details</h2>
+                <span class="close" onclick="closeProductModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="product-details">
+                <!-- Product details will be displayed here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var products = [];
+        products = {{ products|tojson|safe }};
+        productsData = {{ products|tojson|safe }};
+
+        var orders = [];
+        orders = {{ orders|tojson|safe }};
+        ordersData = {{ orders|tojson|safe }};
+
+        var customer = {};
+        customerData = {{customer | safe}};
+        console.log(customerData);
+        localStorage.setItem('cData',JSON.stringify(customerData));
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        function closeOrdersModal(){
+            document.getElementById('ordersModal').style.display = 'none';
+        }
+
+        // Function to close product modal
+        function closeProductModal(){
+            var modal = document.getElementById('productModal');
+            modal.style.display = 'none';
+        }
+
+    </script>
+    <script type = "module" src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

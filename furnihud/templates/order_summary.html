@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Placed</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f6f9fc;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .order-confirmation {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      width: 500px;
+      text-align: center;
+    }
+
+    .green-checkmark {
+      color: #4CAF50;
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .order-confirmation h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .product-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .product-item {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding: 15px 0;
+    }
+
+    .product-image {
+      max-width: 80px;
+      max-height: 80px;
+      margin-right: 20px;
+      border-radius: 6px;
+    }
+
+    .product-details {
+      text-align: left;
+    }
+
+    .product-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .product-price {
+      color: #666;
+    }
+
+    .colorful-element {
+      height: 10px;
+      width: 100%;
+      background: linear-gradient(90deg, #ff8a00, #e52e71, #007bff, #47d147, #ffd700);
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+
+    .return-to-home {
+      margin-top: 20px;
+      padding: 20px 30px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .return-to-home:hover {
+      background-color: #0056b3;
+    }
+    #orders-list{
+      height: 24rem;
+      overflow-y: auto;
+    }
+
+    /* scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+  </style>
+</head>
+<body>
+  <div class="order-confirmation">
+    <div class="green-checkmark">&#10004;</div>
+    <h2>Order Placed</h2>
+    <p>Your order has been successfully placed. Thank you for shopping with us!</p>
+
+    <h3>Order Details:</h3>
+    <div id = "orders-list"></div>
+
+    <div class="colorful-element"></div>
+
+    <button class="return-to-home" onclick="returnToHome()">Return to Home</button>
+  </div>
+
+  <script>
+    let orderProducts = JSON.parse(localStorage.getItem('cart')) || [];
+    console.log(orderProducts);
+    console.log(orderProducts.length);
+
+    const ordersData = document.getElementById("orders-list");
+
+    for (let i = 0; i < orderProducts.length; i++) {
+      const ul = document.createElement('ul');
+      ul.innerHTML = `
+       <li class="product-item">
+        <img src=${orderProducts[i].image_url} alt="Product 1" class="product-image">
+        <div class="product-details">
+          <p class="product-name">${orderProducts[i].name}</p>
+          <p class="product-price">${orderProducts[i].cost}</p>
+        </div>
+      </li>
+        `;
+      ordersData.appendChild(ul);
+    }
+
+    function returnToHome() {
+        let cData = JSON.parse(localStorage.getItem('cData'));
+        let customer_id = '';
+        if (cData && cData !== 'undefined') {
+            customer_id = cData.id;
+            let cartString = JSON.stringify([]);
+            localStorage.setItem('cart',cartString);
+            window.location.href=`/get_product_page/${customer_id}`;
+        }
+    }
+
+  </script>
+</body>
+</html>

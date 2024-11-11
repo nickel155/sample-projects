@@ -1,0 +1,53 @@
+<head>
+     <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Bootstrap JS Bundle CDN (includes Popper.js) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Font Awesome CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+     <link href="../static/cartstyle.css" rel="paymentstylesheet" type="text/css" media="all" />
+
+</head>
+<body>
+<div class="container bg-white rounded-top mt-5" id="zero-pad">
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-10 col-12 pt-3">
+            <div class="d-flex flex-column pt-4">
+                <div><h5 class="text-uppercase font-weight-normal">shopping bag</h5></div>
+                <div class="font-weight-normal"><span id = "total-items">2</span> items</div>
+            </div>
+            <div class="d-flex flex-row px-lg-5 mx-lg-5 mobile" id="heading">
+                <div class="px-lg-5 mr-lg-5" id="product">PRODUCTS</div>
+                <div class="px-lg-5 ml-lg-5" id="cost">COST</div>
+                <div class="px-lg-5 ml-lg-1" id="quantity">QUANTITY</div>
+                <div class="px-lg-5 ml-lg-3" id="total">TOTAL</div>
+            </div>
+            <div id = "cart-products"></div>
+        </div>
+    </div>
+</div>
+<div class="container bg-light rounded-bottom py-4" id="zero-pad">
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-10 col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <button class="btn btn-sm bg-light border border-dark" id = "go-back">GO BACK</button>
+                </div>
+                <div class="px-md-0 px-1" id="footer-font">
+                    <b class="pl-md-4">SUBTOTAL<span class="pl-md-4" id = "total-cart"></span></b>
+                </div>
+                <div>
+                    <button class="btn btn-sm bg-dark text-white px-lg-5 px-3" id="payment-button">PROCEED TO PAYMENT </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script type="module" src="{{ url_for('static', filename='cart.js') }}"></script>
+</body>

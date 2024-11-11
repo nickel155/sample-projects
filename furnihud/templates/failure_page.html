@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Failed</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f6f9fc;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .order-failure {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      width: 500px;
+      text-align: center;
+    }
+
+    .red-crossmark {
+      color: #ff0000;
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .order-failure h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .error-message {
+      color: #ff0000;
+      margin-bottom: 20px;
+    }
+
+    .colorful-element {
+      height: 10px;
+      width: 100%;
+      background: linear-gradient(90deg, #ff8a00, #e52e71, #007bff, #47d147, #ffd700);
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+
+    .return-to-home {
+      margin-top: 20px;
+      padding: 20px 30px;
+      background-color: #ff0000;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .return-to-home:hover {
+      background-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+  <div class="order-failure">
+    <div class="red-crossmark">&#10008;</div>
+    <h2>Order Failed</h2>
+    <p class="error-message">Unfortunately, there was an issue processing your order. Please try again later.</p>
+
+    <div class="colorful-element"></div>
+
+    <button class="return-to-home" onclick="returnToHome()">Return to Home</button>
+  </div>
+
+  <script>
+    function returnToHome() {
+      window.location.href = "/"; // Update the URL as needed
+    }
+  </script>
+</body>
+</html>

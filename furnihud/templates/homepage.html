@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Welcome Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #1E90FF;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 3rem;
+            animation: fadeIn 2s linear;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .animated-text {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #FF6347;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            margin: 10px;
+            animation: colorChange 4s infinite alternate;
+        }
+
+        @keyframes colorChange {
+            0% {
+                background-color: #FF6347;
+            }
+            25% {
+                background-color: #32CD32;
+            }
+            50% {
+                background-color: #FFD700;
+            }
+            75% {
+                background-color: #9370DB;
+            }
+            100% {
+                background-color: #FF6347;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to our Website</h1>
+    <div class="animated-text">Amazing</div>
+    <div class="animated-text">Interactive</div>
+    <div class="animated-text">Colorful</div>
+</body>
+</html>

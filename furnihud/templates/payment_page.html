@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <link rel="stylesheet" href="../static/paymentstyle.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+<div class="payment-container">
+    <h2>Payment Details</h2>
+    <h3 id="total-cost">Pay $450</h3>
+    <form class="payment-form">
+        <div class="form-group">
+            <label for="card-number">Card Number</label>
+            <input type="text"
+                   id="card-number"
+                   name="card-number"
+                   placeholder="xxxx xxxx xxxx xxxx"
+                   required
+            >
+            <div id="card-error" class="error-message"></div>
+
+        </div>
+        <div class="form-group">
+            <label for="card-holder">Card Holder</label>
+            <input type="text" id="card-holder" name="card-holder" placeholder="Enter the card holder's name" required>
+            <div id="card-name" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <label for="expiry">Expiry Date</label>
+            <input type="text"
+                   id="expiry"
+                   name="expiry"
+                   placeholder="MM/YY"
+            >
+            <div id="card-expiry" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="text"
+                   id="cvv"
+                   name="cvv"
+                   placeholder="xxx"
+                   required
+            >
+            <div id="card-cvv" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text"
+                   id="address"
+                   name="address"
+                   placeholder="Enter your address"
+            >
+        </div>
+        <div class="form-group">
+            <label for="delivery-type">Delivery Type</label>
+            <select id="delivery-type" name="delivery-type" required>
+                <option value="pick_up">Pick Up</option>
+                <option value="delivery">Delivery</option>
+            </select>
+            <div id="delivery-type-error" class="error-message"></div>
+        </div>
+        <button id="payment-button" class="pay-button" onclick="proceedPayment()">Pay Now</button>
+    </form>
+</div>
+<script type="module" src="{{ url_for('static', filename='payment_page.js') }}"></script>
+</body>
+</html>

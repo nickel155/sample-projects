@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Page</title>
+        <link href="../static/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- //Custom Theme files -->
+    <!-- web font -->
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+</head>
+<body>
+    <h1>Product Page</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Dimensions</th>
+            <th>Color</th>
+            <th>Brand</th>
+            <th>Material Type</th>
+            <th>Weight</th>
+            <th>Seller ID</th>
+            <th>Rating</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.cost }}</td>
+            <td>{{ product.dimensions }}</td>
+            <td>{{ product.color }}</td>
+            <td>{{ product.brand }}</td>
+            <td>{{ product.material_type }}</td>
+            <td>{{ product.weight }}</td>
+            <td>{{ product.seller_id }}</td>
+            <td>{{ product.rating }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
