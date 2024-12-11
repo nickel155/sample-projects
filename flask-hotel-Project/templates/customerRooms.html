@@ -1,0 +1,234 @@
+{% include "customerHead.html" %}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card p-3 mt-3">
+            <div><h3 class="text-center text-secondary">Room Details</h3></div>
+            {% if isCheckDatesValidMessage %}
+                <div class="row bg-light">
+                    <h4 class="text-danger text-center">
+                        !!!!! Please enter valid check in and check out dates as only {{ remaining_available }} rooms are available !!!!!
+                    </h4>
+                </div>
+            {% endif %}
+
+            {% set price_per_day = 0 %}
+            {% for room_type in room_type_data %}
+                <hr>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div>
+                            <img src="../static/images/{{ room_type['room_pic'] }}"
+                                 style="height:200px; max-width:100%;">
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="text-center">
+                            <h4 style="font-size:16px">{{ room_type['room_type'] }} Bed Room</h4>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-4">
+                                <div>
+                                    <h6 class="text-muted" style="font-size:12px">Size</h6>
+                                    <h5 style="font-size:15px">{{ room_type['room_size'] }} Sq.ft</h5>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div>
+                                    <h6 class="text-muted" style="font-size:12px">Price Per Day</h6>
+                                    <h5 style="font-size:15px">${{ room_type['price_per_day'] }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#paymentModal" onclick="{% set price_per_day = room_type['price_per_day'] %}{% set rom_type_selected = room_type['room_type'] %}">
+                                Book
+                            </button>
+                            <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="/customerBookRooms">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="paymentModalLabel">Book Rooms</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input class="d-none" name="room-type"
+                                                       value="{{ rom_type_selected }}">
+                                                <input class="d-none" name="customer_id"
+                                                       value="{{ customer_id }}">
+                                                <input class="d-none" name="room-price-per-day"
+                                                       value="{{ price_per_day }}">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="text-muted" style="font-size:12px">Number of Rooms
+                                                        </div>
+                                                        <input type="number" class="form-control"
+                                                               placeholder="Enter number of rooms" id="room-count"
+                                                               name="room-count"
+                                                               max="{{ room_type['rooms_available'] }}"
+                                                               required>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <label class="mt-2 ">Check In Date</label>
+                                                        <input class="form-control" type="date"
+                                                               id="{{ 'expected_check_in_' + room_type['room_type'] }}"
+                                                               name="expected_check_in"
+                                                               min="{{ today }}"
+                                                               placeholder="Enter Checkin date" required>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="mt-2">Check Out Date</label>
+                                                        <input class="form-control" type="date"
+                                                               name="expected_check_out"
+                                                               id="{{ 'expected_check_out_' + room_type['room_type'] }}"
+                                                               onfocusout="calculateRoomRent('{{ room_type['room_type'] }}','{{ price_per_day }}')"
+                                                               placeholder="Enter Checkout" required>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="form-group">
+                                                    <label for="card-number">Credit/Debit Card</label>
+                                                    <input type="text" class="form-control" id="card-number"
+                                                           placeholder="Enter your credit/debit card number"
+                                                           name="card-number"
+                                                           minlength="16" maxlength="16" required>
+                                                    <label for="card-type">Card Type</label>
+                                                    <select type="text" class="form-control" id="card-type"
+                                                            name="card-type" required>
+                                                        <option value="">Select your card type</option>
+                                                        <option>Visa</option>
+                                                        <option>Master</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <label>Expiry Month</label>
+                                                            <input type="number" class="form-control  input-group"
+                                                                   id="card-expiry-month"
+                                                                   name="card-expiry-month" min="1" max="12" required>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label>Expiry Year</label>
+                                                            <input type="number" class="form-control  input-group"
+                                                                   id="card-expiry-year"
+                                                                   name="card-expiry-year" min="2024" max="2100"
+                                                                   required>
+                                                        </div>
+                                                        <div class="col">
+                                                            <label>Security Code</label>
+                                                            <input type="number" class="form-control  input-group"
+                                                                   id="card-security-code"
+                                                                   name="card-security-code" min="000" max="999"
+                                                                   required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Amount</label>
+                                                    <input type="number" class="form-control" id="total-rent-amount"
+                                                           name="total-rent-amount"
+                                                           value="0"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success btn-lg">Pay and Book Room
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-3 mt-3">
+            <div><h3 class="text-center text-secondary">Booking Details</h3></div>
+            {% for booking in bookings_data %}
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <div class="text-muted" style="font-size:12px">Booking Id</div>
+                        <h5>{{ booking['_id'] }}</h5>
+                    </div>
+                    <div class="col">
+                        <div class="text-muted" style="font-size:12px">Room Type</div>
+                        <h5>{{ booking['room_type'] }}</h5>
+                    </div>
+                    <div class="col">
+                        <div class="text-muted" style="font-size:12px">Number of Rooms</div>
+                        <h5>{{ booking['room_count'] }}</h5>
+                    </div>
+                    <div class="col">
+                        <div class="text-muted" style="font-size:12px">Number of days</div>
+                        <h5>{{ booking['booking_days'] }}</h5>
+                    </div>
+{#                    <div class="col-md-3">#}
+{#                        <div class="text-muted" style="font-size:12px">Room Numbers</div>#}
+{#                        {% if booking['room_numbers']|length == 0 %}#}
+{#                            <h5>Not yet assigned</h5>#}
+{#                        {% else %}#}
+{#                            {% for room in booking['room_numbers'] %}#}
+{#                                <div class="col badge text-bg-secondary">{{ room }}</div>#}
+{#                            {% endfor %}#}
+{#                        {% endif %}#}
+{#                    </div>#}
+                    <div class="col">
+                        <div class="text-muted" style="font-size:12px">Status</div>
+                        <h5>{{ booking['status'] }}</h5>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-image: url("https://www.cvent.com/sites/default/files/styles/focus_scale_and_crop_800x450/public/image/2021-08/happy%20hotel%20guest%20walking%20through%20lobby%20smiling%20at%20phone.jpg?h=140710cd&itok=_bTtSrjp");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>
+<script>
+
+</script>
+{% block javascript %}
+
+    <script>
+        calculateRoomRent = function (roomType, pricePerDays) {
+            console.log(roomType)
+            console.log(pricePerDays)
+            let date1 = new Date(document.getElementById("expected_check_in_" + roomType).value);
+            let date2 = new Date(document.getElementById("expected_check_out_" + roomType).value);
+
+            let Difference_In_Time = date2.getTime() - date1.getTime();
+
+            let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+            console.log("Total number of days between dates:\n" +
+                date1.toDateString() + " and " + date2.toDateString() +
+                " is: " + Difference_In_Days + " days");
+            var roomsCount = document.getElementById('room-count').value;
+            {#var numOfDays = document.getElementById('room-days-count').value;#}
+            document.getElementById('total-rent-amount').value = parseInt(roomsCount) * parseInt(Difference_In_Days) * parseInt(pricePerDays);
+        }
+        {% for room_type in room_type_data %}
+            document.getElementById("{{ 'expected_check_in_' + room_type['room_type'] }}").addEventListener("change", function () {
+                document.getElementById("{{ 'expected_check_out_' + room_type['room_type'] }}").min = this.value;
+            });
+        {% endfor %}
+    </script>
+{% endblock %}

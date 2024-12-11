@@ -1,0 +1,119 @@
+{% include "links.html" %}
+<nav class="navbar navbar-custom navbar-expand-sm">
+    <div class="container-fluid">
+        <ul class="navbar-nav">
+            <li class="nav-link active">
+                <a class="nav-link active" href="/HotelStaffHome/{{ staff_id }}">Hotel Staff</a>
+            </li>
+            <li class="nav-link active">
+                <a class="nav-link active" href="/viewBooking/{{ staff_id }}">View Bookings</a>
+            </li>
+            <li class="nav-link active">
+                <a class="nav-link active" href="/staff-walk-in/{{ staff_id }}">Walk-In</a>
+            </li>
+            <li class="nav-link active">
+                <a class="nav-link active" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <div class="card card-body text-start">
+            <h3 class="text-center">Book Rooms</h3>
+            <form action="/book-room-customer/{{ staff_id }}" method="POST">
+                <div>
+                    <label class="form-label">First Name</label>
+                    <input type="text" class="form-control" name="first-name" placeholder="Enter First Name" required>
+                </div>
+                <div>
+                    <label class="form-label">Last Name</label>
+                    <input type="text" class="form-control" name="last-name" placeholder="Enter Last Name" required>
+                </div>
+                <div>
+                    <label class="form-label">Date of Birth</label>
+                    <input class="form-control" type="date" name="dob" placeholder="Enter your date of birth" required>
+                </div>
+                <div>
+                    <label class="form-label">Email</label>
+                    <input class="form-control" type="email" name="email" placeholder="Enter Email" required>
+                </div>
+                <div>
+                    <label class="form-label">Phone</label>
+                    <input class="form-control" type="number" name="phone" placeholder="Enter Phone Number"
+                           required>
+                </div>
+                <div>
+                    <label class="form-label">Password</label>
+                    <input class="form-control" type="password" name="password" placeholder="Enter Password">
+                </div>
+                <div>
+                    <label class="form-label">Room type</label>
+                    <select class="form-select " name="room_type">
+                        <option value="">Choose Room Type</option>
+                        {% for room_type in room_type_data %}
+                            <option value="{{ room_type }}">{{ room_type }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label>Number of Rooms</label>
+                        <input type="number" class="form-control"
+                               placeholder="Enter number of rooms" id="room-count"
+                               name="room-count"
+                               required>
+                    </div>
+                    <div class="col-6">
+                        <label>Number of Days</label>
+                        <input type="number" class="form-control"
+                               placeholder="Enter number of days" id="room-days-count"
+                               name="room-days-count"
+                               required>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <h4 class="text-center">Rooms Available</h4>
+                    <br>
+                    <div class="row">
+                        <div class="vr"></div>
+                        {% for room_type in room_type_data %}
+                            <div class="col-5">
+                                <h4>{{ room_type }}</h4>
+                                {% for room_number in rooms_data[room_type] %}
+                                    <input class="form-group" type="checkbox"
+                                           id="selected_rooms_{{ room_type }}_{{ room_number }}"
+                                           name="selected_rooms"
+                                           value="{{ room_number }}">
+                                    <label for="{{ room_number }}">{{ room_number }}</label>
+                                {% endfor %}
+                            </div>
+                            <div class="vr"></div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <br>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-lg btn-success">Book Rooms</button>
+                </div>
+                {% if isRoomsBooked %}
+                    <div class="text-success">Rooms booked successfully !!</div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("input[name=selected_rooms]").change(function () {
+            var maxAllowed = parseInt(document.getElementById('room-count').value);
+            var cnt = $("input[name=selected_room]:checked").length;
+            if (cnt > maxAllowed) {
+                $(this).prop("checked", "");
+                alert('You can select maximum ' + maxAllowed + ' rooms for this booking!!');
+            }
+        });
+    });
+</script>

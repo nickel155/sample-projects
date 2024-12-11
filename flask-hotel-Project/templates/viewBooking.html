@@ -1,0 +1,94 @@
+{% include "links.html" %}
+<nav class="navbar navbar-custom navbar-expand-sm">
+  <div class="container-fluid">
+    <ul class="navbar-nav">
+      <li class="nav-link active">
+        <a class="nav-link active" href="/HotelStaffHome/{{ staff_id }}">Hotel Staff</a>
+      </li>
+      <li class="nav-link active">
+        <a class="nav-link active" href="/viewBooking/{{ staff_id }}">View Bookings</a>
+      </li>
+{#      <li class="nav-link active">#}
+{#        <a class="nav-link active" href="/staff-walk-in/{{ staff_id }}">Walk-In</a>#}
+{#      </li>#}
+      <li class="nav-link active">
+        <a class="nav-link active" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="row">
+    <div class="col">
+        <div class="card p-3 mt-3">
+            <h3 class="text-center">Bookings</h3>
+            {% for booking in bookings %}
+                <form action="/assignRooms" method="POST">
+                    <input class="d-none" type="text" name="staff_id" value="{{ staff_id }}">
+                    <hr>
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="text-muted" style="font-size:12px">Booking Id</div>
+                            <h5>{{ booking['_id'] }}</h5>
+                            <input class="d-none" name="booking_id" value="{{ booking['_id'] }}">
+                        </div>
+                        <div class="col-2">
+                            <div class="text-muted" style="font-size:12px">Customer Name</div>
+                            <h5>{{ customers[booking['customer_id']]['first_name']+ ' ' + customers[booking['customer_id']]['last_name'] }}</h5>
+                        </div>
+                        <div class="col-1">
+                            <div class="text-muted" style="font-size:12px">Room Type</div>
+                            <h5>{{ booking['room_type'] }}</h5>
+                        </div>
+                        <div class="col-1">
+                            <div class="text-muted" style="font-size:12px">Number of Rooms</div>
+                            <h5>{{ booking['room_count'] }}</h5>
+                        </div>
+
+                        <div class="col-1">
+                            <div class="text-muted" style="font-size:12px">Number of days</div>
+                            <h5>{{ booking['booking_days'] }}</h5>
+                        </div>
+                        <div class="col-1">
+                            <div class="text-muted" style="font-size:12px">Status</div>
+                            <h5>{{ booking['status'] }}</h5>
+                        </div>
+                        <div class="col-3">
+                            <div class="text-muted" style="font-size:12px">Rooms Available</div>
+                            {% for room_number in booking['room_numbers_available'] %}
+                                <input class="form-group selected_rooms" type="checkbox"
+                                       id="selected_rooms{{ booking['_id'] }}"
+                                       name="selected_rooms{{ booking['_id'] }}"
+                                       value="{{ room_number }}">
+                                <label for="{{ room_number }}">{{ room_number }}</label>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-1">
+                            <button class="btn btn-primary" type="submit" data-bs-toggle="collapse"
+                                    data-bs-target="#view-rooms-for-type" aria-expanded="false"
+                                    aria-controls="view-rooms-for-type">Assign Rooms
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% block javascript %}
+    {% for booking in bookings %}
+        <script>
+            $(document).ready(function () {
+                $("input[name=selected_rooms"+"{{ booking['_id'] }}"+"]").change(function () {
+                    var maxAllowed = parseInt({{ booking['room_count']|tojson }});
+                    var cnt = $("input[name=selected_rooms"+"{{ booking['_id'] }}"+"]:checked").length;
+                    if (cnt > maxAllowed) {
+                        $(this).prop("checked", "");
+                        alert('You can select maximum ' + maxAllowed + ' rooms for this booking!!');
+                    }
+                });
+            });
+        </script>
+    {% endfor %}
+{% endblock %}
+

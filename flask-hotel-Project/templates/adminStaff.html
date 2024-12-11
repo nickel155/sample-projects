@@ -1,0 +1,183 @@
+{% include "adminHead.html" %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card p-3 mt-3">
+                <h4 class="text-center">{{ 'Edit Hotel Staff' if isStaffEdit else 'HotelStaff Registration' }}</h4>
+                <form action="{{ '/updateHotelStaff' if isStaffEdit else '/addHotelStaff1' }}">
+                    <div>
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-control" name="first-name" placeholder="Enter your first name"
+                               value="{{ edit_staff['first_name'] if isStaffEdit else '' }}" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-control" name="last-name" placeholder="Enter your last name"
+                               value="{{ edit_staff['last_name'] if isStaffEdit else '' }}" required>
+                    </div>
+                    <div>
+                        <label class="form-label">SSN</label>
+                        <input type="text" class="form-control" name="ssn" placeholder="Enter your ssn" min="9" max="9"
+                               value="{{ edit_staff['ssn'] if isStaffEdit else '' }}" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Address</label>
+                        <input type="text" class="form-control" name="address" placeholder="Enter your address"
+                               value="{{ edit_staff['address'] if isStaffEdit else '' }}" required>
+                    </div>
+                    <div>
+                        <label class="form-label">City</label>
+                        <input type="text" class="form-control" name="city" placeholder="Enter your city"
+                               value="{{ edit_staff['city'] if isStaffEdit else '' }}" required>
+                    </div>
+                    <div>
+                        <label class="form-label">State</label>
+                        <input type="text" class="form-control" name="state" placeholder="Enter your state"
+                               value="{{ edit_staff['state'] if isStaffEdit else '' }}" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Zip Code</label>
+                        <input type="text" class="form-control" name="zip-code" placeholder="Enter your zip code" min="5" max="5"
+                               value="{{ edit_staff['zip_code'] if isStaffEdit else '' }}" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Email</label>
+                        <input class="form-control" type="email" name="email" placeholder="Enter your Email"
+                               value="{{ edit_staff['email'] if isStaffEdit else '' }}" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Phone</label>
+                        <input class="form-control" type="number" name="phone" placeholder="Enter your phone number"
+                               value="{{ edit_staff['phone'] if isStaffEdit else '' }}"
+                               required>
+                    </div>
+                    <div>
+                        <label class="form-label">Password</label>
+                        <input class="form-control" type="password" id="password" name="password" placeholder="Enter Password"
+                               value="{{ edit_staff['password'] if isStaffEdit else '' }}" onkeyup="passConfirm()"
+                               required>
+                    </div>
+                    <div>
+                        <label class="form-label">Password</label>
+                        <input class="form-control" type="password" id="confirm-password" name="confirm-password" placeholder="Renter Password"
+                               value="{{ edit_staff['password'] if isStaffEdit else '' }}" onkeyup="passConfirm()"
+                               required>
+                    </div>
+                    <div id="match-message"></div>
+                    <div class="d-none">
+                        <input type="text" class="form-control" name="isRequestUpdateStaff" value="true">
+                    </div>
+                    <input type="submit" class="btn btn-primary w-100 mt-3"
+                           value="{{ 'Update Staff' if isStaffEdit else 'Add Staff' }}">
+                </form>
+                {% if isStaffAdded %}
+                    <div class="text-success">Staff added successfully</div>
+                {% endif %}
+                {% if isDuplicateStaff %}
+                    <div class="text-danger">Staff exists. Please enter new staff details.</div>
+                {% endif %}
+                {% if isUpdatedStaff %}
+                    <div class="text-success">Staff data successfully updated.</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-center">Staff Details</h3>
+            {% for staff in staff_data %}
+                <hr>
+                <div class="col">
+                    <div class="card p-3 mt-3">
+                        <div class="row">
+                            <div class="col-4">
+                                <div>
+                                    <div class="text-muted" style="font-size:12px">First Name</div>
+                                    <h6>{{ staff['first_name'] }}</h6>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div>
+                                    <div class="text-muted" style="font-size:12px">Last Name</div>
+                                    <h6>{{ staff['last_name'] }}</h6>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div>
+                                    <div class="text-muted" style="font-size:12px">SSN</div>
+                                    <h6>{{ staff['ssn'] }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div>
+                                <div class="text-muted" style="font-size:12px">Address</div>
+                                <h6>{{ staff['address'] }}</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div>
+                                    <div class="text-muted" style="font-size:12px">City</div>
+                                    <h6>{{ staff['city'] }}</h6>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div>
+                                    <div class="text-muted" style="font-size:12px">State</div>
+                                    <h6>{{ staff['state'] }}</h6>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div>
+                                    <div class="text-muted" style="font-size:12px">Zip-Code</div>
+                                    <h6>{{ staff['zip_code'] }}</h6>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <div class="text-muted" style="font-size:12px">Email</div>
+                                    <h6>{{ staff['email'] }}</h6>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div>
+                                    <div class="text-muted" style="font-size:12px">Phone</div>
+                                    <h6>{{ staff['phone'] }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <form action="/editStaff">
+                                <input class="d-none" name="staff-email" value="{{ staff['email'] }}">
+                                <button type="submit" class="btn btn-block btn-primary w-100">Edit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        background-image: url("https://www.luxxu.net/blog/wp-content/uploads/2020/01/The-Worlds-Most-Exceptionally-Designed-Luxury-Hotel-Lobbies-4.jpg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>
+<script>
+    var passConfirm = function () {
+        if (document.getElementById("password").value ===
+            document.getElementById("confirm-password").value) {
+            document.getElementById("match-message").style.color = "Green";
+            document.getElementById("match-message").innerHTML = "Passwords match!"
+        } else {
+            document.getElementById("match-message").style.color = "Red";
+            document.getElementById("match-message").innerHTML = "Passwords do NOT match!"
+        }
+    }
+</script>

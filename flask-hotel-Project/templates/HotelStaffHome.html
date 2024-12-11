@@ -1,0 +1,28 @@
+{% include "links.html" %}
+<nav class="navbar navbar-custom navbar-expand-sm">
+    <div class="container-fluid">
+        <ul class="navbar-nav">
+            <li class="nav-link active">
+                <a class="nav-link active" href="/HotelStaffHome/{{ staff_id }}">Hotel Staff</a>
+            </li>
+            <li class="nav-link active">
+                <a class="nav-link active" href="/viewBooking/{{ staff_id }}">View Bookings</a>
+            </li>
+{#            <li class="nav-link active">#}
+{#                <a class="nav-link active" href="/staff-walk-in/{{ staff_id }}">Walk-In</a>#}
+{#            </li>#}
+            <li class="nav-link active">
+                <a class="nav-link active" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="bg-text">Welcome Staff</div>
+<style>
+    body {
+        background-image: url("https://www.nevistas.com/ul/4/2019/07/11/06.jpg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>

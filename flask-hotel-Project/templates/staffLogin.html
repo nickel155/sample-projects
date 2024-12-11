@@ -1,0 +1,35 @@
+{% include "links.html" %}
+{% include "head.html" %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 mt-4">
+      <div class="card p-3 mt-3">
+        <h4 class="text-center">Hotel Staff Login</h4>
+        <form action="StaffValidate" method="POST">
+          <div>
+            <label class="form-label">Email</label>
+            <input class="form-control" type="text" name="email" placeholder="Enter Email">
+          </div>
+           <div>
+            <label class="form-label">Password</label>
+            <input class="form-control" type="password" name="password" placeholder="Enter Password">
+          </div>
+          <input type="submit" class="btn btn-primary w-100 mt-3" value="Login">
+            {% if isInvalidCredentials %}
+                <div class="text-danger">Invalid Credentials. Please enter valid credentials to login</div>
+            {% endif %}
+        </form>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+<style>
+	body{
+		 background-image: url("https://images.pexels.com/photos/5511103/pexels-photo-5511103.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+	  	 background-repeat: no-repeat;
+ 		 background-attachment: fixed;
+ 		 background-size: cover;
+	}
+</style>
